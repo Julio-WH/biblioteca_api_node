@@ -1,0 +1,24 @@
+instalamos una applicacion para node donde podamos cambiar de versiones
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.4/install.sh | bash
+
+actualizamos con source ~/.bashrc
+checamos que lo tengamos con nvm --version
+instalamos el node lts con "nvm install --lts"
+
+nos bajamos la repo: https://github.com/Julio-WH/biblioteca_api_node
+hacemos npm install
+hacemos migraciones npm run migrations:run
+
+instalamos pm2 para manterlo en background
+npm install -g pm2
+pm2 start index.js --name app
+
+ahora nginx
+sudo nano /etc/nginx/sites-available/nombre-de-tu-sitio
+
+Crea un enlace simbólico en la carpeta sites-enabled para habilitar el sitio:
+sudo ln -s /etc/nginx/sites-available/nombre-de-tu-sitio /etc/nginx/sites-enabled/
+
+verificamos la configuracion sudo nginx -t
+
+reiniciamos sudo systemctl restart nginx
