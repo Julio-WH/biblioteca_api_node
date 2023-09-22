@@ -1,10 +1,12 @@
 const express = require('express');
 const BooksService = require('../services/books.service');
+const AuthorService = require('../services/author.service');
 const validatorHandler = require('../middlewares/validator.handler');
 const { createBookSchema, updateBookSchema, getBookSchema, queryBookSchema } = require('../schemas/book.schema');
 
 const router = express.Router();
 const service = new BooksService();
+const serviceAthor = new AuthorService();
 
 router.get('/', validatorHandler(queryBookSchema, 'query'),
     async (req, res, next) => {
@@ -21,7 +23,17 @@ router.post('/',
     validatorHandler(createBookSchema, 'body'),
     async (req, res) => {
     const body = req.body;
-    console.log(body)
+    try {
+        const getAuthor = await serviceAthor.findOne(body.authorId)
+    } catch (error) {
+        if(error.isBoom){
+            const {output} = error
+            res.status(output.statusCode).json(output.payload.message);
+        }else{
+            res.status(500).json(error.message);
+        }
+    }
+    
     const newBook = await service.create(body);
     res.status(201).json(newBook);
 });

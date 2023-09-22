@@ -12,6 +12,18 @@ module.exports = {
     await queryInterface.createTable(GENDER_TABLE, GenderSchema);
     await queryInterface.createTable(BOOK_TABLE, BookSchema);
     await queryInterface.createTable(BOOK_GENDER_TABLE, BookGenderSchema);
+
+    // Crear los datos de inicialización
+    await queryInterface.bulkInsert(GENDER_TABLE,[
+      { name: 'Ciencia Ficción', description: 'Libros de ciencia ficción' },
+      { name: 'Misterio', description: 'Libros de misterio y suspenso' },
+      { name: 'Romance', description: 'Libros románticos' },
+      { name: 'Fantasía', description: 'Libros de fantasía' },
+      { name: 'Aventura', description: 'Libros de aventuras' },
+      { name: 'Biografía', description: 'Libros de biografías' },
+      { name: 'Poesía', description: 'Libros de poesía' },
+      { name: 'Histórico', description: 'Libros históricos' },
+    ]);
   },
 
   async down (queryInterface) {
