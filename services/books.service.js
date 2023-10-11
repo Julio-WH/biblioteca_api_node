@@ -40,6 +40,14 @@ class BooksService {
 
     async create(data) {
         const newBook =  await models.Book.create(data)
+        if ("genders" in data) {
+            await Promise.all(data.genders.map(async (elemento) => {
+                const book_gender = await models.BookGender.create({
+                    "bookId":newBook.id,
+                    "genderId":elemento
+                });
+            }));
+        }
         return newBook;
     }
 

@@ -6,6 +6,7 @@ const description = Joi.string().alphanum().min(3).max(150);
 const price = Joi.number().integer().min(10);
 const status = Joi.string().min(4);
 const authorId = Joi.number().integer();
+const genders = Joi.array().items(Joi.number().required());
 
 const limit = Joi.number().integer();
 const offset = Joi.number().integer();
@@ -15,13 +16,15 @@ const createBookSchema = Joi.object({
     price: price.required(),
     description: description.required(),
     authorId: authorId.required(),
+    genders,
 });
 
 const updateBookSchema = Joi.object({
     name: name,
     price: price,
     description: description,
-    authorId
+    authorId,
+    genders,
 });
 
 const getBookSchema = Joi.object({
