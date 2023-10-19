@@ -14,7 +14,7 @@ const BookGenderSchema = {
     },
     bookId: {
         field: 'book_id',
-        allowNull: false,
+        allowNull: true,
         type: DataTypes.INTEGER,
         references: {
             model: BOOK_TABLE,
@@ -25,7 +25,7 @@ const BookGenderSchema = {
     },
     genderId: {
         field: 'gender_id',
-        allowNull: false,
+        allowNull: true,
         type: DataTypes.INTEGER,
         references: {
             model: GENDER_TABLE,
