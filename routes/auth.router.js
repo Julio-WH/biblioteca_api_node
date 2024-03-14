@@ -16,7 +16,7 @@ router.post('/login',
         try {
             const user = await userService.findOne(username);
             const checkPassword = await compare(password, user.password);
-            const tokenSession = await tokenSign(user);
+            const tokenSession = await tokenSign(user.dataValues);
             if(checkPassword){
                 res.json({...user.dataValues,tokenSession});
             }
