@@ -18,11 +18,6 @@ const UserSchema = {
     password: {
         type: DataTypes.STRING,
         allowNull: false,
-        set(value) {
-            // Utiliza bcrypt para hashear la contraseña antes de guardarla
-            const hashedPassword = bcrypt.hashSync(value, 10); // Genera un hash con 10 rounds de hashing
-            this.setDataValue('password', hashedPassword);
-          }
     },
     role: {
         type: DataTypes.ENUM('admin', 'user', 'librarian', 'visitor'),

@@ -2,14 +2,15 @@ const express = require('express');
 const AuthorService = require('../services/author.service');
 const validatorHandler = require('../middlewares/validator.handler');
 const checkAuth = require('../middlewares/auth.handler')
-
+const checkRoleAuth = require('../middlewares/roleAuth.hadler')
 const { createAuthorSchema, updateAuthorSchema, getAuthorSchema } = require('../schemas/author.schema');
 
 const router = express.Router();
 const service = new AuthorService();
 
 router.get('/',
-    checkAuth, 
+    checkAuth,
+    checkRoleAuth(['admin']), 
     async (req, res) => {
     const authors = await service.find();
     res.json(authors);

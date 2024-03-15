@@ -14,7 +14,7 @@ router.post('/login',
     async (req, res, next) => {
         const {username, password} = req.body
         try {
-            const user = await userService.findOne(username);
+            const user = await userService.findOneUsername(username);
             const checkPassword = await compare(password, user.password);
             const tokenSession = await tokenSign(user.dataValues);
             if(checkPassword){
@@ -30,6 +30,19 @@ router.post('/login',
     }
 
 )
-router.post('/register')
+router.post('/register',
+    validatorHandler(getUserSchema, 'body'),
+    async (req, res, next) => {
+        const {username, password} = req.body
+        try {
+            const passwordHash = await encrypt(password)
+            const user = await userService.create({username,'password':passwordHash});
+            const tokenSession = await tokenSign(user);
+            res.status(201).json({...user.dataValues,tokenSession});
+        } catch (error) {
+            next(error);
+        }
+    }
+)
 
 module.exports = router;

@@ -1,7 +1,14 @@
 const Joi = require('joi');
+const username = Joi.string()
+const password = Joi.string().required()
 const getUserSchema = Joi.object({
-    username: Joi.string().required(),
-    password: Joi.string().required(),
+    username: username.required(),
+    password: password,
 });
 
-module.exports = {getUserSchema}
+const updateUserSchema = Joi.object({
+    username: username,
+    password: password,
+});
+
+module.exports = {getUserSchema, updateUserSchema}
