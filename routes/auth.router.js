@@ -9,16 +9,19 @@ const {getUserSchema} = require('../schemas/user.schema')
 
 const userService = new UserService();
 
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 router.post('/login',
     validatorHandler(getUserSchema, 'body'),
     async (req, res, next) => {
         const {username, password} = req.body
         try {
+            await delay(2500);
             const user = await userService.findOneUsername(username);
             const checkPassword = await compare(password, user.password);
             const tokenSession = await tokenSign(user.dataValues);
             if(checkPassword){
-                res.json({...user.dataValues,tokenSession});
+                res.json({username,tokenSession});
             }
             else{
                 res.status(409).json({'error':'Invalid password'});
